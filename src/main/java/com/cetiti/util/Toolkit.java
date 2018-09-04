@@ -17,7 +17,7 @@ public class Toolkit {
    * @return
    */
   public static String regexRule(String payload, String rule){
-    rule = rule.replace("\\d+", "((30|31|32|33|34|35|36|37|38|39)+)");
+    rule = rule.replace("(\\d+)", "((30|31|32|33|34|35|36|37|38|39)+)");
     Pattern pattern = Pattern.compile(rule);
     Matcher matcher = pattern.matcher(payload);
     while(matcher.find()){
