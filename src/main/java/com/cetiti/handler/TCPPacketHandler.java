@@ -12,7 +12,6 @@ import io.pkts.packet.IPv4Packet;
 import io.pkts.packet.MACPacket;
 import io.pkts.packet.Packet;
 import io.pkts.protocol.Protocol;
-import jdk.nashorn.internal.scripts.JD;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -94,6 +93,7 @@ public class TCPPacketHandler implements PacketHandler {
       if(virtualIdOld.getJd() == null){
         virtualIdOld.setJd(virtualIdNew.getJd());
       }
+      //todo: 添加新的字段需要在这边添加
     }
 
   }
@@ -126,6 +126,7 @@ public class TCPPacketHandler implements PacketHandler {
             case "JD":
               virtualId.setJd(str);
               break;
+            //todo: 添加新的字段需要在这边添加
           }
 
           //退出匹配
