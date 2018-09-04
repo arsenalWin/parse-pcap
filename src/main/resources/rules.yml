@@ -9,9 +9,9 @@ rules:
     ruleList:
       - desIp: 106.39.169.231 # 京东app
         regex: 757569643D(\d+)2D # uuid=(imei)-
-#  - type: JD
-#    ruleList:
-#      - desIp: 106.39.169.231 # 京东app
-#        regex: 436F6F6B69653A2070696E3D(\w+)3B # Cookie: pin=(jd);
+  - type: JD
+    ruleList:
+      - desIp: 106.39.169.231 # 京东app
+        regex: 436F6F6B69653A2070696E3D(\w+)3B # Cookie: pin=(jd);
 
 

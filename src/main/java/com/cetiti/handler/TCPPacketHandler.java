@@ -12,6 +12,7 @@ import io.pkts.packet.IPv4Packet;
 import io.pkts.packet.MACPacket;
 import io.pkts.packet.Packet;
 import io.pkts.protocol.Protocol;
+import jdk.nashorn.internal.scripts.JD;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -90,6 +91,9 @@ public class TCPPacketHandler implements PacketHandler {
       if(virtualIdOld.getImei() == null){
         virtualIdOld.setImei(virtualIdNew.getImei());
       }
+      if(virtualIdOld.getJd() == null){
+        virtualIdOld.setJd(virtualIdNew.getJd());
+      }
     }
 
   }
@@ -110,6 +114,7 @@ public class TCPPacketHandler implements PacketHandler {
           if(regex == null) { continue; }
 
           String str = Toolkit.hexToChar(regex);
+
           //根据type设置vitualid字段
           switch (r.getType()){
             case "QQ":
@@ -117,6 +122,9 @@ public class TCPPacketHandler implements PacketHandler {
               break;
             case "IMEI":
               virtualId.setImei(str);
+              break;
+            case "JD":
+              virtualId.setJd(str);
               break;
           }
 

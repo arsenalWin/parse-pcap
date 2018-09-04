@@ -17,6 +17,11 @@ public class VirtualId {
    */
   private String imei;
 
+  /**
+   * 京东账号信息
+   */
+  private String jd;
+
   public String getQq() {
     return qq;
   }
@@ -31,5 +36,13 @@ public class VirtualId {
 
   public void setImei(String imei) {
     this.imei = imei;
+  }
+
+  public String getJd() {
+    return jd;
+  }
+
+  public void setJd(String jd) {
+    this.jd = jd;
   }
 }
