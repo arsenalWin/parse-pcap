@@ -39,7 +39,7 @@ rules:
 #### 如何添加规则
 一般来说，想要添加一条新规则的步骤如下（以QQ号为例）：
 1. 以电脑作为AP，手机连上电脑的wifi后，使用wireshark开始抓包。如果只想抓取一个APP的数据，可以限制其他软件的上网；
-2. 使用wireshark查看所抓取的包，查看其中的敏感信息，多看几个包
+2. 使用wireshark查看所抓取的包，查看其中的敏感信息，多看几个包   
 ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxobrymdoj20ye0n4ad9.jpg)
 ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoc2pr0gj20y20m3419.jpg)
 3. 从上面的截图中，我们基本可以归纳出QQ号的规则如下：
@@ -52,8 +52,8 @@ rules:
 ```
 4.在程序中添加相关代码片段
  - 在 VirtualId.java 中添加字段“qq”，以及相关getter，setter方法;
- - 在 TCPPacketHandler.java 中添加如下两个代码片段
- ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoslu2cgj20hy0gpjsa.jpg)
+ - 在 TCPPacketHandler.java 中添加如下两个代码片段   
+ ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoslu2cgj20hy0gpjsa.jpg)   
  ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxosxb3u1j20il0llq48.jpg)
  
  
