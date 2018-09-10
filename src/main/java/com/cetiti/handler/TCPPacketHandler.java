@@ -13,7 +13,13 @@ import io.pkts.packet.MACPacket;
 import io.pkts.packet.Packet;
 import io.pkts.protocol.Protocol;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +32,29 @@ import java.util.Map;
  */
 public class TCPPacketHandler implements PacketHandler {
   /** 规则列表 */
-  private AllRules rules = YamlUtil.loadConf("rules.yml", AllRules.class);
-  private List<RulesOfVirtualId> ruleList = rules.getRules();
+  private AllRules rules;
+
+  private List<RulesOfVirtualId> ruleList;
 
   /** 每个mac对应的所有虚拟身份 */
   private Map<String, VirtualId> results = new HashMap<>();
 
-  public TCPPacketHandler() throws IOException {
+  /** 反射相关 **/
+  private BeanInfo beanInfo;
+
+  private PropertyDescriptor[] pd;
+
+  private Method mGet;
+
+  private Method mSet;
+
+
+  public TCPPacketHandler() throws IOException, IntrospectionException {
+    rules = YamlUtil.loadConf("rules.yml", AllRules.class);
+    ruleList = rules.getRules();
+
+    beanInfo = Introspector.getBeanInfo(VirtualId.class);
+    pd = beanInfo.getPropertyDescriptors();
   }
 
   @Override
@@ -45,7 +67,13 @@ public class TCPPacketHandler implements PacketHandler {
 
         if (bytes != null) {
           String payload = HexDump.toHexString(bytes);
-          getVirtualId(payload, macAddr, destinationIp);
+          try {
+            getVirtualId(payload, macAddr, destinationIp);
+          } catch (InvocationTargetException e) {
+            e.printStackTrace();
+          } catch (IllegalAccessException e) {
+            e.printStackTrace();
+          }
         }
 
       }
@@ -77,35 +105,20 @@ public class TCPPacketHandler implements PacketHandler {
   /**
    * 获取数据包中的虚拟身份
    */
-  private void getVirtualId(String payload, String mac, String desIp){
+  private void getVirtualId(String payload, String mac, String desIp) throws InvocationTargetException, IllegalAccessException {
     VirtualId virtualIdOld = results.get(mac);
     VirtualId virtualIdNew = getVirtualIdFromPacket(payload, desIp);
 
     if(virtualIdOld == null) {
       results.put(mac, virtualIdNew);
     }else {
-      if(virtualIdOld.getQq() == null){
-        virtualIdOld.setQq(virtualIdNew.getQq());
+      for(int i=0; i<pd.length; i++){
+        mGet = pd[i].getReadMethod();
+        mSet = pd[i].getWriteMethod();
+        if(mGet.invoke(virtualIdOld) == null){
+          mSet.invoke(virtualIdOld, mGet.invoke(virtualIdNew));
+        }
       }
-      if(virtualIdOld.getImei() == null){
-        virtualIdOld.setImei(virtualIdNew.getImei());
-      }
-      if(virtualIdOld.getJd() == null){
-        virtualIdOld.setJd(virtualIdNew.getJd());
-      }
-      if(virtualIdOld.getImsi() == null){
-        virtualIdOld.setImsi(virtualIdNew.getImsi());
-      }
-      if(virtualIdOld.getMobileNum() == null){
-        virtualIdOld.setMobileNum(virtualIdNew.getMobileNum());
-      }
-      if(virtualIdOld.getOsVersion() == null){
-        virtualIdOld.setOsVersion(virtualIdNew.getOsVersion());
-      }
-      if(virtualIdOld.getUser163() == null){
-        virtualIdOld.setUser163(virtualIdNew.getUser163());
-      }
-      //todo: 添加新的字段需要在这边添加
     }
 
   }
@@ -115,7 +128,7 @@ public class TCPPacketHandler implements PacketHandler {
    * @param payload
    * @return
    */
-  private VirtualId getVirtualIdFromPacket(String payload, String desIp) {
+  private VirtualId getVirtualIdFromPacket(String payload, String desIp) throws InvocationTargetException, IllegalAccessException {
     VirtualId virtualId = new VirtualId();
     for(RulesOfVirtualId r : ruleList){
       List<Rule> rules = r.getRuleList();
@@ -128,29 +141,12 @@ public class TCPPacketHandler implements PacketHandler {
           String str = Toolkit.hexToChar(regex);
 
           //根据type设置vitualid字段
-          switch (r.getType()){
-            case "QQ":
-              virtualId.setQq(str);
+          for(int i=0; i<pd.length; i++){
+            if(r.getType().equalsIgnoreCase(pd[i].getName())){
+              mSet = pd[i].getWriteMethod();
+              mSet.invoke(virtualId, str);
               break;
-            case "IMEI":
-              virtualId.setImei(str);
-              break;
-            case "JD":
-              virtualId.setJd(str);
-              break;
-            case "IMSI":
-              virtualId.setImsi(str);
-              break;
-            case "MOBILE_NUM":
-              virtualId.setMobileNum(str);
-              break;
-            case "OS_VERSION":
-              virtualId.setOsVersion(str);
-              break;
-            case "USER163":
-              virtualId.setUser163(str);
-              break;
-            //todo: 添加新的字段需要在这边添加
+            }
           }
 
           //退出匹配

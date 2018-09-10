@@ -53,9 +53,6 @@ rules:
 ```
 4.在程序中添加相关代码片段
  - 在 VirtualId.java 中添加字段“qq”，以及相关getter，setter方法;
- - 在 TCPPacketHandler.java 中添加如下两个代码片段   
- ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoslu2cgj20hy0gpjsa.jpg)      
- ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxosxb3u1j20il0llq48.jpg)
  
  
 5.将程序中的dump.pcap包替换成上面抓取的包，执行程序。如果result.yml中出现QQ号，则实验成功。

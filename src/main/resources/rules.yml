@@ -25,7 +25,7 @@ rules:
     ruleList:
       - desIp: 106.39.169.231 # 京东app
         regex: 436F6F6B69653A2070696E3D(\w+)3B # Cookie: pin=(jd);
-  - type: MOBILE_NUM
+  - type: MOBILENUM           # 手机号
     ruleList:
       - desIp: 218.205.68.247 # 浙江移动
         regex: 57522E6D6F62696C653D(\d+)26 # Cookie: pin=(jd);
@@ -35,10 +35,9 @@ rules:
     ruleList:
       - desIp: 220.181.12.110 # 163邮箱
         regex: 55534552(\w+)0D0A # USER()..
-  - type: OS_VERSION          # 终端系统版本
+  - type: OSVERSION          # 终端系统版本
     ruleList:
       - desIp: 106.39.169.231 # 京东app
         regex: 266F7356657273696F6E(\ddot+)26 # &osVersion()&
 
 #继续添加新的规则
-

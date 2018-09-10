@@ -5,6 +5,7 @@ import com.cetiti.handler.TCPPacketSearchHandler;
 import io.pkts.Pcap;
 import io.pkts.framer.FramingException;
 
+import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -15,8 +16,8 @@ import java.util.Map;
  * @Modified By:
  */
 public class Main {
-  public static void main(final String[] args) throws IOException, FramingException {
-    final Pcap pcap = Pcap.openStream("dump1.pcap");
+  public static void main(final String[] args) throws IOException, FramingException, IntrospectionException {
+    final Pcap pcap = Pcap.openStream("dump.pcap");
 
 //    TCPPacketSearchHandler packetHandler = new TCPPacketSearchHandler();
     TCPPacketHandler packetHandler = new TCPPacketHandler();
