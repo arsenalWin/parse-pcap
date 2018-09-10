@@ -22,6 +22,26 @@ public class VirtualId {
    */
   private String jd;
 
+  /**
+   * IMSI信息
+   */
+  private String imsi;
+
+  /**
+   * 手机号信息
+   */
+  private String mobileNum;
+
+  /**
+   * 163邮箱
+   */
+  private String user163;
+
+  /**
+   * 系统版本号
+   */
+  private String osVersion;
+
   //todo: 继续添加其他虚拟身份
 
   public String getQq() {
@@ -46,5 +66,37 @@ public class VirtualId {
 
   public void setJd(String jd) {
     this.jd = jd;
+  }
+
+  public String getImsi() {
+    return imsi;
+  }
+
+  public void setImsi(String imsi) {
+    this.imsi = imsi;
+  }
+
+  public String getMobileNum() {
+    return mobileNum;
+  }
+
+  public void setMobileNum(String mobileNum) {
+    this.mobileNum = mobileNum;
+  }
+
+  public String getUser163() {
+    return user163;
+  }
+
+  public void setUser163(String user163) {
+    this.user163 = user163;
+  }
+
+  public String getOsVersion() {
+    return osVersion;
+  }
+
+  public void setOsVersion(String osVersion) {
+    this.osVersion = osVersion;
   }
 }

@@ -2,17 +2,43 @@ rules:
   - type: QQ
     ruleList:
       - desIp: 117.144.244.33
-        regex: 000000000D(\d+).
+        regex: 000000000D(\d+)
       - desIp: 61.151.225.24
         regex: 000000000D(\d+)
+      - desIp: 101.226.225.145 # qq
+        regex: 77773D(\d+)26   # qq=()&
   - type: IMEI
     ruleList:
-      - desIp: 106.39.169.231 # 京东app
+      - desIp: 106.39.169.231    # 京东app
         regex: 757569643D(\d+)2D # uuid=(imei)-
+      - desIp: 101.226.225.145   # qq
+        regex: 696D65693D(\d+)26 # imei=()&
+      - desIp: 14.215.138.23     # qq
+        regex: 696D65693D(\d+)26 # imei=()&
+  - type: IMSI
+    ruleList:
+      - desIp: 101.226.225.145   # qq
+        regex: 696D73693D(\d+)26 # imsi=()&
+      - desIp: 14.215.138.23     # qq
+        regex: 696D73693D(\d+)26 # imsi=()&
   - type: JD
     ruleList:
       - desIp: 106.39.169.231 # 京东app
         regex: 436F6F6B69653A2070696E3D(\w+)3B # Cookie: pin=(jd);
+  - type: MOBILE_NUM
+    ruleList:
+      - desIp: 218.205.68.247 # 浙江移动
+        regex: 57522E6D6F62696C653D(\d+)26 # Cookie: pin=(jd);
+      - desIp: 180.97.93.23   # 百度地图开放平台
+        regex: 266E756D3D(\d+)0D0A # Cookie: pin=(jd);
+  - type: USER163             # 163邮箱用户名 POP协议
+    ruleList:
+      - desIp: 220.181.12.110 # 163邮箱
+        regex: 55534552(\w+)0D0A # USER()..
+  - type: OS_VERSION          # 终端系统版本
+    ruleList:
+      - desIp: 106.39.169.231 # 京东app
+        regex: 266F7356657273696F6E(\ddot+)26 # &osVersion()&
 
 #继续添加新的规则
 

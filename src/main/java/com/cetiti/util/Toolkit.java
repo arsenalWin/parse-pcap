@@ -18,6 +18,7 @@ public class Toolkit {
    */
   public static String regexRule(String payload, String rule){
     rule = rule.replace("(\\d+)", "((30|31|32|33|34|35|36|37|38|39)+)");
+    rule = rule.replace("(\\ddot+)", "((30|31|32|33|34|35|36|37|38|39|2E)+)");
     rule =
         rule.replace(
             "(\\w+)",

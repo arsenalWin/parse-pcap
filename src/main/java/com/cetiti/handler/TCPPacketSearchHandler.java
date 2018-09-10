@@ -52,7 +52,7 @@ public class TCPPacketSearchHandler implements PacketHandler {
    */
   private boolean findX(String payload){
     //我们想要找的字符串，16进制编码
-    String findStr = "383637323931303339313335333934";
+    String findStr = "3135383538313635343139";
 
     if(payload.indexOf(findStr) > 0){
       return true;

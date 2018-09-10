@@ -1,7 +1,8 @@
 # parse-pcap
 
 #### 简介
-利用java解析抓包文件，并从中提取出虚拟身份信息，如QQ，IMEI等
+利用java解析抓包文件，并从中提取出虚拟身份信息，现在已经解析出QQ,IMEI,IMSI,手机号，163邮箱，京东账号，手机操作系统
+版本等信息
 #### 运行说明
 - 确定电脑上安装了jdk8
 - 将项目导入到eclipse或者intelliJ IDEA中
@@ -53,7 +54,7 @@ rules:
 4.在程序中添加相关代码片段
  - 在 VirtualId.java 中添加字段“qq”，以及相关getter，setter方法;
  - 在 TCPPacketHandler.java 中添加如下两个代码片段   
- ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoslu2cgj20hy0gpjsa.jpg)   
+ ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxoslu2cgj20hy0gpjsa.jpg)      
  ![](http://ww1.sinaimg.cn/large/93f8d068gy1fuxosxb3u1j20il0llq48.jpg)
  
  

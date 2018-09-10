@@ -93,6 +93,18 @@ public class TCPPacketHandler implements PacketHandler {
       if(virtualIdOld.getJd() == null){
         virtualIdOld.setJd(virtualIdNew.getJd());
       }
+      if(virtualIdOld.getImsi() == null){
+        virtualIdOld.setImsi(virtualIdNew.getImsi());
+      }
+      if(virtualIdOld.getMobileNum() == null){
+        virtualIdOld.setMobileNum(virtualIdNew.getMobileNum());
+      }
+      if(virtualIdOld.getOsVersion() == null){
+        virtualIdOld.setOsVersion(virtualIdNew.getOsVersion());
+      }
+      if(virtualIdOld.getUser163() == null){
+        virtualIdOld.setUser163(virtualIdNew.getUser163());
+      }
       //todo: 添加新的字段需要在这边添加
     }
 
@@ -125,6 +137,18 @@ public class TCPPacketHandler implements PacketHandler {
               break;
             case "JD":
               virtualId.setJd(str);
+              break;
+            case "IMSI":
+              virtualId.setImsi(str);
+              break;
+            case "MOBILE_NUM":
+              virtualId.setMobileNum(str);
+              break;
+            case "OS_VERSION":
+              virtualId.setOsVersion(str);
+              break;
+            case "USER163":
+              virtualId.setUser163(str);
               break;
             //todo: 添加新的字段需要在这边添加
           }
