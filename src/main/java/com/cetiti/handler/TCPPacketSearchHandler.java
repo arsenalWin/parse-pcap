@@ -32,7 +32,7 @@ public class TCPPacketSearchHandler implements PacketHandler {
         if (bytes != null) {
           String payload = HexDump.toHexString(bytes);
 
-          if (findX(payload)) {
+          if (findX(payload) && !destinationIp.equals("192.168.1.226")) {
             System.out.println("macAddr:" + macAddr);
             System.out.println("desIp:" + destinationIp);
             System.out.println(payload);

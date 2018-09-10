@@ -15,6 +15,8 @@ rules:
         regex: 696D65693D(\d+)26 # imei=()&
       - desIp: 14.215.138.23     # qq
         regex: 696D65693D(\d+)26 # imei=()&
+      - desIp: 14.215.138.23     # 139邮箱app
+        regex: 3C646576696365494D45493E(\d+)3C2F646576696365494D45493E # <deviceIMEI>()</deviceIMEI>
   - type: IMSI
     ruleList:
       - desIp: 101.226.225.145   # qq
@@ -39,5 +41,16 @@ rules:
     ruleList:
       - desIp: 106.39.169.231 # 京东app
         regex: 266F7356657273696F6E(\ddot+)26 # &osVersion()&
-
+      - desIp: 221.176.67.243 # 139邮箱app
+        regex: 3C6F7356657273696F6E3E(\ddot+)3C2F6F7356657273696F6E3E # <osVersion>()</osVersion>
+  - type: USER139            # 139邮箱
+    ruleList:
+      - desIp: 221.176.9.130 # 139邮箱app
+        regex: 4C6F67696E5F557365724E756D6265723DA(\d+)3B # Login_UserNumber=();
+      - desIp: 221.176.67.243 # 139邮箱app
+        regex: 3C7569643E(\d+)2C # <uid>(),
+  - type: USER189            # 189邮箱
+    ruleList:
+      - desIp: 183.61.185.65 # 189邮箱app
+        regex: 4C4F47494E2022(\w+)22 # LOGIN "()"
 #继续添加新的规则

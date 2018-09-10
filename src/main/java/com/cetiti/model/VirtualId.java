@@ -42,6 +42,16 @@ public class VirtualId {
    */
   private String osVersion;
 
+  /**
+   * 139邮箱
+   */
+  private String user139;
+
+  /**
+   * 189邮箱
+   */
+  private String user189;
+
   //todo: 继续添加其他虚拟身份
 
   public String getQq() {
@@ -98,5 +108,21 @@ public class VirtualId {
 
   public void setOsVersion(String osVersion) {
     this.osVersion = osVersion;
+  }
+
+  public String getUser139() {
+    return user139;
+  }
+
+  public void setUser139(String user139) {
+    this.user139 = user139;
+  }
+
+  public String getUser189() {
+    return user189;
+  }
+
+  public void setUser189(String user189) {
+    this.user189 = user189;
   }
 }
