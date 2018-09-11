@@ -18,7 +18,6 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -37,24 +36,12 @@ public class TCPPacketHandler implements PacketHandler {
   private List<RulesOfVirtualId> ruleList;
 
   /** 每个mac对应的所有虚拟身份 */
-  private Map<String, VirtualId> results = new HashMap<>();
-
-  /** 反射相关 **/
-  private BeanInfo beanInfo;
-
-  private PropertyDescriptor[] pd;
-
-  private Method mGet;
-
-  private Method mSet;
+  private Map<String, Map<String, String>> results = new HashMap<>();
 
 
-  public TCPPacketHandler() throws IOException, IntrospectionException {
+  public TCPPacketHandler() throws IOException {
     rules = YamlUtil.loadConf("rules.yml", AllRules.class);
     ruleList = rules.getRules();
-
-    beanInfo = Introspector.getBeanInfo(VirtualId.class);
-    pd = beanInfo.getPropertyDescriptors();
   }
 
   @Override
@@ -67,13 +54,7 @@ public class TCPPacketHandler implements PacketHandler {
 
         if (bytes != null) {
           String payload = HexDump.toHexString(bytes);
-          try {
-            getVirtualId(payload, macAddr, destinationIp);
-          } catch (InvocationTargetException e) {
-            e.printStackTrace();
-          } catch (IllegalAccessException e) {
-            e.printStackTrace();
-          }
+          getVirtualId(payload, macAddr, destinationIp);
         }
 
       }
@@ -94,31 +75,22 @@ public class TCPPacketHandler implements PacketHandler {
     }
   }
 
-  public Map<String, VirtualId> getResults() {
+  public Map<String, Map<String,String>> getResults() {
     return results;
   }
 
-  public void setResults(Map<String, VirtualId> results) {
+  public void setResults(Map<String, Map<String,String>> results) {
     this.results = results;
   }
 
   /**
    * 获取数据包中的虚拟身份
    */
-  private void getVirtualId(String payload, String mac, String desIp) throws InvocationTargetException, IllegalAccessException {
-    VirtualId virtualIdOld = results.get(mac);
-    VirtualId virtualIdNew = getVirtualIdFromPacket(payload, desIp);
-
-    if(virtualIdOld == null) {
-      results.put(mac, virtualIdNew);
-    }else {
-      for(int i=0; i<pd.length; i++){
-        mGet = pd[i].getReadMethod();
-        mSet = pd[i].getWriteMethod();
-        if(mGet.invoke(virtualIdOld) == null){
-          mSet.invoke(virtualIdOld, mGet.invoke(virtualIdNew));
-        }
-      }
+  private void getVirtualId(String payload, String mac, String desIp) {
+    if(results.get(mac) != null){
+      results.get(mac).putAll(getVirtualIdFromPacket(payload,desIp));
+    }else{
+      results.put(mac, getVirtualIdFromPacket(payload,desIp));
     }
 
   }
@@ -128,8 +100,9 @@ public class TCPPacketHandler implements PacketHandler {
    * @param payload
    * @return
    */
-  private VirtualId getVirtualIdFromPacket(String payload, String desIp) throws InvocationTargetException, IllegalAccessException {
-    VirtualId virtualId = new VirtualId();
+  private Map<String, String> getVirtualIdFromPacket(String payload, String desIp) {
+    Map<String, String> virtualId = new HashMap<>();
+
     for(RulesOfVirtualId r : ruleList){
       List<Rule> rules = r.getRuleList();
 
@@ -140,14 +113,8 @@ public class TCPPacketHandler implements PacketHandler {
 
           String str = Toolkit.hexToChar(regex);
 
-          //根据type设置vitualid字段
-          for(int i=0; i<pd.length; i++){
-            if(r.getType().equalsIgnoreCase(pd[i].getName())){
-              mSet = pd[i].getWriteMethod();
-              mSet.invoke(virtualId, str);
-              break;
-            }
-          }
+          // 根据type设置vitualid字段
+          virtualId.put(r.getType(), str);
 
           //退出匹配
           break;
