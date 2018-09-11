@@ -7,7 +7,7 @@
 - 确定电脑上安装了jdk8
 - 将项目导入到eclipse或者intelliJ IDEA中
 - 运行Main函数
-- 程序将解析项目目录下的“dump1.pcap”文件（通过wireshark等抓包软件抓取），并输出“result.yml”文件
+- 程序将解析项目目录下的“dump.pcap”文件（通过wireshark等抓包软件抓取），并输出“result.yml”文件
 #### 配置文件说明
 本项目使用yaml作为配置文件，配置项如下：
 ```yaml
@@ -33,7 +33,7 @@ rules:
 其中type字段表示虚拟身份的名称，ruleList字段表示能够匹配这个虚拟身份的规则（可以不止一条），desIp表示目标地址的IP，regex表示去匹配虚拟身份的正则表达式。
 因为我们需要匹配的是一串十六进制数，所以正则匹配表达式也需要写成十六进制的格式。为了方便编
 写这种十六进制的正则匹配表达式，我们做了一下处理，用“(\d+)”来匹配一串数字，用“(\w+)”来
-匹配数字，大小写字母以及下划线。
+匹配数字，大小写字母，下划线，@以及小数点,用“(\ddot+)”来匹配一串数字以及小数点
 #### 依赖库说明
 1. snakeyaml: yaml读写操作库
 2. io.pkts: pcap包解析库，github地址：https://github.com/aboutsip/pkts
@@ -51,11 +51,7 @@ rules:
       - desIp: 61.151.225.24
         regex: 000000000D(\d+)
 ```
-4.在程序中添加相关代码片段
- - 在 VirtualId.java 中添加字段“qq”，以及相关getter，setter方法;
- 
- 
-5.将程序中的dump.pcap包替换成上面抓取的包，执行程序。如果result.yml中出现QQ号，则实验成功。
+4.将程序中的dump.pcap包替换成上面抓取的包，执行程序。如果result.yml中出现QQ号，则实验成功。
 一般来说需要多人多次重复进行试验。
 
 

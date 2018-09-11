@@ -52,8 +52,6 @@ public class VirtualId {
    */
   private String user189;
 
-  //todo: 继续添加其他虚拟身份
-
   public String getQq() {
     return qq;
   }
